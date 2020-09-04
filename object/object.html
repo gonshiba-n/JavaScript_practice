@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript_practice01_object</title>
-    <script src="object.js"></script>
+    <!-- <script src="object.js"></script> -->
+    <!-- ここの記述でUncaught TypeError: Cannot set property 'textContent' of null発生：上からの読み込む為、スクリプト読み込みの時点でまだ、要素が読み込まれておらずエラー -->
 </head>
 <body>
+    <div id="root"></div>
 
+    <script src="object.js"></script>
 </body>
 </html>
