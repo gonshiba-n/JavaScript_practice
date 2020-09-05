@@ -72,3 +72,46 @@ console.log(Object.keys(myThings))
 //     3: "coffee"
 // length: 4
 
+// Object.keysで取得した配列をforEachメソッドで配列の中のプロパティ取得する
+
+
+Object.keys(myThings).forEach( key =>
+    console.log(key, "プロパティ名は", myThings[key], "です")
+);
+
+// sports プロパティ名は サッカー です
+// hobby プロパティ名は プログラミング です
+// eat プロパティ名は 焼肉 です
+// coffee プロパティ名は ブラック です
+
+// 少し寄り道
+// 上記はラムダ式(アロー関数)を使用している→無名関数を簡潔に書く方法がラムダ式と呼ばれる書き方である
+
+// // 無名関数ver
+// function (num) {
+//     return num * 2
+// }
+
+// // ラムダ式ver
+// (num) => {
+//     return num * 2
+// }
+
+// 無名関数
+// Object.keys(myThings).forEach(function (key) {
+//     console.log(key, "プロパティ名は", myThings[key], "です")
+// });
+
+// ラムダ式
+// Object.keys(myThings).forEach((key) => {
+//     console.log(key, "プロパティ名は", myThings[key], "です")
+// });
+
+// ↓引数名の(),{}を省略。returnのみならreturnも省略可能
+
+// Object.keys(myThings).forEach(key => console.log(key, "プロパティ名は", myThings[key], "です"));
+
+
+
+// ラムダ式参考URL: https://midolog.net/javascript-lambda-expression-tutorial
+
