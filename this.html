@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thisの挙動調査</title>
+</head>
+<body>
+    <script>
+        // メソッド呼び出しにおけるthis
+        let myObject = {
+            value: 10,
+            show: function() {
+                console.log(this.value)
+            }
+        }
+        myObject.show() //10 myObjectをthisが格納
+
+        // 関数呼び出しにおけるthis
+        function show() {
+            console.log(this)
+            this.value = 1
+        }
+        show() //グローバルオブジェクトが呼び出された。ブラウザではWindowオブジェクト
+
+        // コンストラクタ(Rubyで言うイニシャライズメソッド)におけるthis
+        function MyObjectInit(value) {
+            this.value = value
+            this.increment = function(){
+                this.value++
+            }
+        }
+        let myObjectInit = new MyObjectInit(0)
+        console.log(myObjectInit.value) //0 インスタンスが格納される
+
+        myObjectInit.increment() //自身に１を足すメソッド
+        console.log(myObjectInit.value) //1 インスタンスに１が足された
+
+        // apply,call呼び出しにおけるthis
+        // 補足
+        // apply・・・thisの値を指定して関数を呼び出す。第１引数に指定したいオブジェクト、第２引数に配列を一度だけ渡す
+        // 例：apply(yourObject, [2, 10])
+        // call・・・thisの値を指定して関数を呼び出す。第１引数に指定したいオブジェクト、第２引数に連続した引数リストを渡す
+        // call(yourObject, 2, 10)
+
+        let Object = {
+            add: function(value1, value2){
+                console.log(this.value + value1 + value2)
+            }
+        }
+        let anthoerObject = {
+            value: 3
+        }
+
+        Object.add.apply(anthoerObject, [2, 10]) //15 anotherObjectがthisに格納
+        Object.add.call(anthoerObject, 2, 10) //15 anotherObjectがthisに格納
+
+        // functionを基準として(呼ばれ方で参照が変化するが)
+        // thisはfunctionを読んだときの . の前についているオブジェクトを指している。
+
+        参考URL: https://qiita.com/takeharu/items/9935ce476a17d6258e27
+        参考URL: https://qiita.com/takkyun/items/c6e2f2cf25327299cf03
+
+    </script>
+</body>
+</html>

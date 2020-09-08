@@ -1,0 +1,27 @@
+Todoのデータフロー
+
+フレームにテキストを入力
+↓
+オブジェクトを作成
+↓
+オブジェクトを配列に挿入
+
+DOM(Document Obuject Model)について
+HTMLの要素などをオブジェクトとして扱うための仕組み
+参考URL(MDN): https://developer.mozilla.org/ja/docs/Web/API/Document_Object_Model/Introduction
+参考URL: https://eng-entrance.com/what-is-dom
+
+
+document.querySelector("#HTMLのID名)・・・JSがHTMLの要素を取得できる
+クラス名などの複数要素を取得したい場合は
+document.querySelectorAllで取得する。
+この場合は要素は配列となる
+
+document.addEventListener()・・・特定の要素ではなくHTMLドキュメントに対してイベント処理を設定できる
+(イベント発火)
+参考URL： https://www.sejuku.net/blog/57625
+
+DOMContentLoaded・・・Webページが読み込みが完了した時に発動（画像などのリソースは含まない）
+
+bind・・・引数をbind(拘束)した新しい関数を作れる」関数である。
+参考URL： https://qiita.com/__mick/items/4ad701e8d7742fcda7d8
