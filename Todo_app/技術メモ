@@ -23,5 +23,7 @@ document.addEventListener()・・・特定の要素ではなくHTMLドキュメ�
 
 DOMContentLoaded・・・Webページが読み込みが完了した時に発動（画像などのリソースは含まない）
 
-bind・・・引数をbind(拘束)した新しい関数を作れる」関数である。
+bind・・・引数をbind(拘束)した新しい関数を作れる関数である。
+関数を再利用したい場合に使用
 参考URL： https://qiita.com/__mick/items/4ad701e8d7742fcda7d8
+参考URL： https://qiita.com/hosomichi/items/e11ad0c4ea79db2dee84

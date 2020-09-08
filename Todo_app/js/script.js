@@ -9,9 +9,23 @@ function registerDOM() {
     sortMenu = document.querySelector("#sort-menu")
 }
 
-// 初期化
+// 初期化関数
 function initialize() {
     registerDOM()
+    bindEvents()
 }
 
+// ブラウザのページ解析が終了次第、registerDOM()関数の中の変数に各HTML要素を変数に格納する
 document.addEventListener("DOMContentLoaded", initialize.bind(this))
+
+function bindEvents() {
+    inputForm.addEventListener("submit", (event) => handleSubmit(event)) //アロー関数使用(ラムダ式)
+}
+
+function handleSubmit(event) {
+    event.preventDefault()
+    const todoObj = {
+        text: inputForm["input-text"].value
+    }
+    addTodo(todoObj)
+}
