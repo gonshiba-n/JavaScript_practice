@@ -5,9 +5,13 @@ let inputForm, todoMain, tabButton, sortMenu
 
 // DOMを変数に格納する
 function registerDOM() {
+    // 入力フォーム
     inputForm = document.querySelector("#input-form")
+    // tbody(表示)
     todoMain = document.querySelector("#todo-main")
+    // タブ(インボックス、完了したタスク)の各ボタン
     tabButton = document.querySelector("#tab").querySelectorAll("button")
+    // ソートメニュー
     sortMenu = document.querySelector("#sort-menu")
 }
 
@@ -22,6 +26,7 @@ function initialize() {
 document.addEventListener("DOMContentLoaded", initialize.bind(this))
 
 function bindEvents() {
+    // 引数はイベントオブジェクト
     inputForm.addEventListener("submit", (event) => handleSubmit(event)) //アロー関数使用(ラムダ式)
 }
 
@@ -123,4 +128,19 @@ function updateTodoList() {
         todoMain.innerHTML = htmlStrings
     })
     todoMain.innerHTML = htmlStrings
+    todoList.forEach(todo => {
+        const todoEl = document.getElementById(todo.id)
+        if (todoEl){
+            // 存在したらtr内のボタンタグを抽出する
+            todoEl.querySelectorAll("button").forEach(btn => {
+                const type = btn.dataset.type
+                btn.addEventListener("click", event => {
+                    // data属性がinbox若しくはdoneだったら完了/未完了ボタンなのでトグル関数を実行する
+                    if (type.indexOf("inbox") >= 0 || type.indexOf("done") >= 0){
+                        updateTodoState(todo, type)
+                    }
+                })
+            })
+        }
+    })
 }
