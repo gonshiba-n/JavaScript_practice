@@ -27,3 +27,18 @@ bind・・・引数をbind(拘束)した新しい関数を作れる関数であ�
 関数を再利用したい場合に使用
 参考URL： https://qiita.com/__mick/items/4ad701e8d7742fcda7d8
 参考URL： https://qiita.com/hosomichi/items/e11ad0c4ea79db2dee84
+
+toLocaleDateString・・・Dataオブジェクトのメソッドであり言語に合わせた日時の文字列を返す
+参考URL: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+
+三項演算子
+const editType = todo.isEdit ? "editFixed" : "edit"
+if文に置き換えてみる
+let editType
+if (todo.edit){
+    editType = "editFixed"
+}else{
+    editType = "edit"
+}
+6行が１行に短縮可能
+コードの見通しがよくなる。
