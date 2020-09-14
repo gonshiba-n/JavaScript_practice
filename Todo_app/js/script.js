@@ -2,6 +2,8 @@
 const todoList = []
 // JSから扱うDOM要素を扱うグローバル変数を定義
 let inputForm, todoMain, tabButton, sortMenu
+// 表示するターゲットの変数化
+let displayTarget = "inbox"
 
 // DOMを変数に格納する
 function registerDOM() {
@@ -28,6 +30,12 @@ document.addEventListener("DOMContentLoaded", initialize.bind(this))
 function bindEvents() {
     // 引数はイベントオブジェクト
     inputForm.addEventListener("submit", (event) => handleSubmit(event)) //アロー関数使用(ラムダ式)
+    // インボックス(未完了のみ表示させる)
+    tabButton.forEach(tab => {
+        tab.addEventListener("click", event => handleTabClick(event))
+    })
+    // 表示順のソート切り替え
+    sortMenu.addEventListener("change", event => handleSort(event))
 }
 
 // Todoを登録する処理
@@ -122,13 +130,20 @@ function createTodoHtmlString(todo) {
 function updateTodoList() {
     let htmlStrings = ""
     // HTMLを書き換える
-    todoList.forEach(todo => {
-        // 新しいHTMLを出力
-        htmlStrings += createTodoHtmlString(todo)
-        todoMain.innerHTML = htmlStrings
-    })
+    todoList
+        // todoの未完了のものだけを追加
+        // 表示するターゲットに応じてTodo配列をフィルタリングする
+        .filter(todo => !todo.isDone !== (displayTarget == "inbox"))
+        .forEach(todo => {
+            // 新しいHTMLを出力
+            htmlStrings += createTodoHtmlString(todo)
+            todoMain.innerHTML = htmlStrings
+        })
     todoMain.innerHTML = htmlStrings
-    todoList.forEach(todo => {
+    todoList
+    // 表示するターゲットに応じてTodo配列をフィルタリングする
+    .filter(todo => !todo.isDone !== (displayTarget == "inbox"))
+    .forEach(todo => {
         const todoEl = document.getElementById(todo.id)
         if (todoEl){
             // 存在したらtr内のボタンタグを抽出する
@@ -143,4 +158,20 @@ function updateTodoList() {
             })
         }
     })
+}
+
+// todoの完了ステートの変更
+function updateTodoState(todo, type) {
+    // ボタンのデータ属性とTodoオブジェクトの比較をする
+    todo.isDone = type == "done"
+    updateTodoList()
+}
+
+function handleTabClick1(event) {
+    // クリックしたターゲットを変数化する
+    const me = event.currentTarget
+    // イベントがアタッチされている要素=meのカスタムデータ属性を取得
+    displayTarget = me.dataset.target
+    // HTMLを再描画
+    updateTodoList()
 }

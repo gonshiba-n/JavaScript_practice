@@ -11,7 +11,6 @@ HTMLの要素などをオブジェクトとして扱うための仕組み
 参考URL(MDN): https://developer.mozilla.org/ja/docs/Web/API/Document_Object_Model/Introduction
 参考URL: https://eng-entrance.com/what-is-dom
 
-
 document.querySelector("#HTMLのID名)・・・JSがHTMLの要素を取得できる
 クラス名などの複数要素を取得したい場合は
 document.querySelectorAllで取得する。
@@ -44,3 +43,31 @@ if (todo.edit){
 コードの見通しがよくなる。
 
 イベントハンドラ・・・イベントハンドラとは、JavaScriptで記述された、マウスの動きといった動作・操作に対して特定の処理を与えるための命令のことである。
+
+イベント駆動の呼び方・・・
+イベントリスナ(イベントハンドラ)を定義(addEventListener)することをアタッチ
+イベントリスナ（イベントハンドラ)を解除(removeEventListener)することをデタッチ
+と呼ぶ
+
+.currentTarget・・・イベントを定義(アタッチ)した要素を取得できる。似たメソッドに.targetがあるが、こちらはイベントが発生した要素を取得する
+例
+ーHTMLー
+<ul id="test">
+    <li>hoge</li>
+    <li>hogu</li>
+</ul>
+
+window.addEventListener("DOMContentLoaded", () => {
+    //UL要素にclickイベントをアタッチする
+    document.getElementById("test")
+        .addEventListener("click", event => {
+            console.log(event.target.textContent) //hoge, hogu
+            console.log(event.currentTaeget.id) // test
+        })
+})
+
+.dataset・・・DOMStringMapのインスタンスである。HTMLの独自データ属性(要素に好きな属性を与えられる => data-属性名)を取得できる
+参考URL: https://uhyohyo.net/javascript/12_4.html
+
+DOMStringMap・・・HTML要素のdata-*属性を操作するための機能を備えたインターフェイス
+参考URL: https://lab.syncer.jp/Web/API_Interface/Reference/IDL/DOMStringMap
