@@ -4,6 +4,8 @@ const todoList = []
 let inputForm, todoMain, tabButton, sortMenu
 // 表示するターゲットの変数化
 let displayTarget = "inbox"
+// ソートキー(HTMLのValue属性)を変数化
+let sortIndex = "created_desc"
 
 // DOMを変数に格納する
 function registerDOM() {
@@ -16,6 +18,7 @@ function registerDOM() {
     // ソートメニュー
     sortMenu = document.querySelector("#sort-menu")
 }
+
 
 // 初期化関数
 function initialize() {
@@ -54,7 +57,7 @@ function addTodo(todoObj) {
     // 一意のID(配列の長さ+1とする)
     todoObj.id = "todo-" + (todoList.length + 1)
     // 作成日(Dataオブジェクトのメソッドで日時の文字列を返す)
-    todoObj.createdAt = new Date().toLocaleDateString()
+    todoObj.createdAt = new Date().toLocaleString()
     // 優先度
     todoObj.priority = 3
     // 完了フラグ
@@ -67,6 +70,11 @@ function addTodo(todoObj) {
     updateTodoList()
     // フォームを初期化する
     clearInputForm()
+}
+
+// フォームをクリアする
+function clearInputForm() {
+    inputForm["input-text"].value = ""
 }
 
 // Todo1小単位のHTML文字列を生成する
@@ -133,7 +141,9 @@ function updateTodoList() {
     todoList
         // todoの未完了のものだけを追加
         // 表示するターゲットに応じてTodo配列をフィルタリングする
-        .filter(todo => !todo.isDone !== (displayTarget == "inbox"))
+        .filter(todo => todo.isDone !== (displayTarget == "inbox"))
+        // ソートの実行
+        .sort(sortTodos)
         .forEach(todo => {
             // 新しいHTMLを出力
             htmlStrings += createTodoHtmlString(todo)
@@ -142,7 +152,7 @@ function updateTodoList() {
     todoMain.innerHTML = htmlStrings
     todoList
     // 表示するターゲットに応じてTodo配列をフィルタリングする
-    .filter(todo => !todo.isDone !== (displayTarget == "inbox"))
+    .filter(todo => todo.isDone !== (displayTarget == "inbox"))
     .forEach(todo => {
         const todoEl = document.getElementById(todo.id)
         if (todoEl){
@@ -167,11 +177,31 @@ function updateTodoState(todo, type) {
     updateTodoList()
 }
 
-function handleTabClick1(event) {
+function handleTabClick(event) {
     // クリックしたターゲットを変数化する
     const me = event.currentTarget
     // イベントがアタッチされている要素=meのカスタムデータ属性を取得
     displayTarget = me.dataset.target
     // HTMLを再描画
     updateTodoList()
+}
+
+function handleSort(e) {
+    sortIndex = e.currentTarget.value //created-asc,desc,priority-asc,descのHTMLのvalueが入る
+    updateTodoList()
+}
+
+function sortTodos(a, b) {
+    switch (sortIndex) {
+        case "created-desc":
+            return console.log(Date.parse(b.createdAt) - Date.parse(a.createdAt))
+        case "created-asc":
+            return console.log(Date.parse(a.createdAt) - Date.parse(b.createdAt))
+        case "priority-desc":
+            return b.priority - a.priority
+        case "priority-asc":
+            return a.priority - b.priority
+        default:
+            return todoList;
+    }
 }

@@ -71,3 +71,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
 DOMStringMap・・・HTML要素のdata-*属性を操作するための機能を備えたインターフェイス
 参考URL: https://lab.syncer.jp/Web/API_Interface/Reference/IDL/DOMStringMap
+
+.sort
