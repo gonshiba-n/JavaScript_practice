@@ -129,6 +129,11 @@ function createTodoHtmlString(todo) {
     // 完了の有無をラベルに表示
     htmlString += doneButtonLabel
     htmlString += "</button></td>"
+    // 削除ボタン描画
+    htmlString += '<td class="cell-delete">'
+    htmlString += '<button data-type="delete">'
+    htmlString += '削除'
+    htmlString += '</button></td>'
     htmlString += "</tr>"
     // 作成したHTMLを返す
     return htmlString
@@ -160,12 +165,29 @@ function updateTodoList() {
             todoEl.querySelectorAll("button").forEach(btn => {
                 const type = btn.dataset.type
                 btn.addEventListener("click", event => {
-                    // data属性がinbox若しくはdoneだったら完了/未完了ボタンなのでトグル関数を実行する
-                    if (type.indexOf("inbox") >= 0 || type.indexOf("done") >= 0){
+                    // 編集ボタンとそれ以外のボタンで機能を切り分ける
+                    if (type.indexOf("edit") >= 0){
+                        editTodo(todo, type)
+                    } else if (type.indexOf("delete") >=0 ){
+                        // 配列からオブジェクトを削除する
+                        deleteTodo(todo)
+                        updateTodoState(todo, type)
+                    } else{
                         updateTodoState(todo, type)
                     }
                 })
             })
+            // 編集状態の場合はテキストフィールドにもイベントをバインドする
+            if (todo.isEdit) {
+                todoEl.querySelector(".input-edit").addEventListener("input", event => {
+                    todo.text = event.currentTarget.value
+                })
+                todoEl
+                .querySelector(".input-priority")
+                .addEventListener("input", event => {
+                    todo.priority = parseInt(event.currentTarget.value, 10)
+                })
+            }
         }
     })
 }
@@ -191,12 +213,13 @@ function handleSort(e) {
     updateTodoList()
 }
 
+// sortメソッドの引数に比較関数を与えると２つずつ値を取り出して比較してくれる
 function sortTodos(a, b) {
     switch (sortIndex) {
         case "created-desc":
-            return console.log(Date.parse(b.createdAt) - Date.parse(a.createdAt))
+            return Date.parse(b.createdAt) - Date.parse(a.createdAt)
         case "created-asc":
-            return console.log(Date.parse(a.createdAt) - Date.parse(b.createdAt))
+            return Date.parse(a.createdAt) - Date.parse(b.createdAt)
         case "priority-desc":
             return b.priority - a.priority
         case "priority-asc":
@@ -204,4 +227,18 @@ function sortTodos(a, b) {
         default:
             return todoList;
     }
+}
+
+// 編集モード
+function editTodo(todo, type) {
+    todo.isEdit = type == "edit"
+    updateTodoList()
+}
+
+// todoを削除
+function deleteTodo(todo) {
+    // 対象のtodoオブジェクトの配列内からインデックスを検索
+    const index = todoList.findIndex((t) => t.id === todo.id)
+    // 配列から削除
+    todoList.splice(index, 1)
 }

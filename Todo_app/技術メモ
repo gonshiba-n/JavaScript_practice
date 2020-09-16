@@ -72,4 +72,8 @@ window.addEventListener("DOMContentLoaded", () => {
 DOMStringMap・・・HTML要素のdata-*属性を操作するための機能を備えたインターフェイス
 参考URL: https://lab.syncer.jp/Web/API_Interface/Reference/IDL/DOMStringMap
 
-.sort
+.sort・・・配列の要素を昇順で、要素を文字列に変換してから、 UTF-16 コード単位の値の並びとして比較する
+比較関数を与えることも可能であり、関数で戻り値でソートされる
+参考URL：https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+比較関数を使った.sort
+参考URL：https://cpoint-lab.co.jp/article/201902/8219/
