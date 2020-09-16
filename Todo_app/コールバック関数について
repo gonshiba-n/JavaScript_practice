@@ -1,0 +1,70 @@
+コールバック関数
+
+構文
+function 高階関数(コールバック関数) {
+    コールバック関数();
+}
+
+・コールバック関数
+関数の引数に関数を渡すことが可能。この引数として渡される関数をコールバック関数と呼ぶ
+・高階関数
+引数に関数を受けった関数を高階関数と呼ぶ（関数の中で関数を実行している関数）
+
+
+例1
+function hello() {
+    console.log("こんにちは");
+}
+
+//高階関数
+function confirmed(fn) {
+    if(window.confirm("実行しますか？")) {
+        //コールバック関数
+        fn();
+    }
+};
+
+confirmed(hello)
+
+例2
+function confirmed(fn) {
+    const input = window.prompt("実行しますか？");
+    fn(input);
+}
+
+confirmed関数(高階関数呼び出し)→無名関数を引数として渡す(コールバック関数)
+confirmed(function (input) {
+    if (input === "実行") {
+        console.log("実行しました");
+    } else {
+        console.log("実行はキャンセルされました");
+    }
+});
+
+ラムダ式にてさらに簡略化
+confirmed((input) => {
+        if (input === "実行") {
+        console.log("実行しました");
+    } else {
+        console.log("実行はキャンセルされました");
+    }
+});
+
+例3
+const btn = document.getElementByID("button");
+
+//addEventListenerの第一引数はイベントで第二引数はコールバック関数を受け取る
+btn.addEventListener("click", function(){
+    console.log("hello")
+});
+
+例4
+const foods = ["人参", "じゃかいいも", "玉ねぎ"];
+
+//forEachの引数にコールバック関数を受け取る
+foods.forEach(function(food){
+    console.log(food);
+});
+
+playgroundのURL(playcode)
+https://playcode.io
