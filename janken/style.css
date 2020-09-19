@@ -24,3 +24,11 @@ button {
     padding: 2%;
     margin: 2%;
 }
+
+#win{
+    color: red;
+}
+
+#lose{
+    color: blue;
+}
