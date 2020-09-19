@@ -50,5 +50,3 @@ function gameJuge(player, cp, hand) {
 }
 
 setButtonAction()
-
-// ボタンロック追加
