@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js基礎</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}<br>
+        {{1 + 1}}<br>
+        <a v-bind:href="link">Vue.js</a>
+        <h1 :vaule="1 + 1">value</h1>
+        <div :class="{foo: isFoo, bar: isBar}">クラス名はtrueが付与される</div>
+        <div :class="[bazClass]">配列もクラス名に出来る</div>
+        <p v-if="instock > 10">if販売中</p>
+        <p v-else-if="instock > 0">elseif残りわずか</p>
+        <p v-else>else売り切れ</p>
+        <ul>
+            <li v-for="item in items" :key="item">
+                {{item}}
+            </li>
+        </ul>
+        <p>カウント:{{count}}:イベント処理</p>
+        <button v-on:click="count = count + 1">カウントアップ</button>
+        <p>カウント:{{twoCountUp}}:メソッドオプション</p>
+        <!-- <button v-on:click="addTwoCountUp">2カウントアップ</button> -->
+        <!-- 省略 -->
+        <button @click="addTwoCountUp">2カウントアップ</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./main.js"></script>
+</body>
+</html>

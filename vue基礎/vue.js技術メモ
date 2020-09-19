@@ -1,0 +1,96 @@
+vue.js公式レフ
+URL: https://jp.vuejs.org
+
+let app = new Vue({
+  //オプション
+  el: '#app',
+  data: {
+  //プロパティ: 値
+    message: 'Hello Vue!'
+  }
+})
+
+オプション
+elオプション・・・Vueインスタンスを紐付けるDOM要素を指定する。
+DOM要素はCSSセレクタ形式で指定可能
+
+dataオプション・・・Vueインスタンスに持たせたいデータを登録できる。dataオプションは
+オブジェクトに値を持つため、Vueインスタンスに複数のデータを持たせることが可能。
+JavaScriptの式(単一の値に評価されるもの)も使用可能。
+例:Boolean,1 + 1など
+
+Mustache構文・・・Vueインスタンスに持たせたデータはVueインスタンスに紐付けたDOM要素内で使用可能。
+データを参照するには{{データ名}}とする。
+
+v-bindディレクティブ・・・VueのインスタンスのデータはHTMLの属性値にも使用可能。
+しかしMustache構文は使用できないため、v-bindディレクティブを使用する。
+HTMLにv-bind:属性名="参照するデータ名"の形で使用。
+v-bind:
+:
+省略可
+
+class属性にはオブジェクトや配列指定も可能
+trueとfalseのデータがあればtrueのみclass名として適応される。
+配列は各配列要素の値がclass名として付与される。
+
+条件分岐
+条件によって要素の表示を分け出したい場合はv-ifディレクティブを使用
+値がtrueであれば表示、falseであれば非表示となる。
+例
+<p v-if="instock > 10">a</p>
+<p v-else-if="instock > 5">b</p>
+<p v-else>c</p>
+
+new Vue({
+    省略
+    data:{
+        instock: 5
+    }
+})
+//出力はbとなる。
+
+ループ
+v-forディレクティブを使用。
+v-for="配列の要素名in配列名"の形で使用。
+なお、描画効率化のためkey属性という特別な属性を各要素に付与することが推奨されている。
+(keyの属性値は一意である必要がある)
+例；リストで使用する例
+<li v-for="item in items" v-bind:key="item">
+    {{item}}
+</li>
+
+new Vue({
+    省略
+    data:{
+        items: ["a", "b", "c"]
+    }
+})
+
+イベント処理
+クリック、フォームの送信など、イベント発生した際に処理を行いたいい場合は
+v-onディレクティブを使用。
+<button v-on:click="count = count + 1">カウント追加</button>
+new Vue({
+    省略
+    data:{
+        count: 0
+    }
+})
+
+メソッドオプション
+Vueインスタンスにメソッドを指定することが可能。
+オブジェクトを値にとり、複数のメソッドを定義することも出来る。
+<button v-on:click="addCount">カウント追加</button>
+
+new Vue({
+    省略
+    methods:{
+        addCount: function(){
+            this.count = this.count + 1
+        }
+    }
+})
+
+v-onも省略が可能。
+v-on:イベント名="行いたい処理"
+@イベント名="行いたい処理"
