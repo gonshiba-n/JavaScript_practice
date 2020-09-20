@@ -94,3 +94,26 @@ new Vue({
 v-onも省略が可能。
 v-on:イベント名="行いたい処理"
 @イベント名="行いたい処理"
+
+computedオプション
+dataオプションに登録したデータを用いた算出プロパティを登録できる。
+computedオプションの算出プロパティは関数を値にとる。
+メソッドオプションとの違いとしてcomputedオプションはdataオプションのデータを用いて別のデータを
+算出する場合にこちらを用いる。
+例
+new Vue({
+    省略
+    data:{
+        todos:[]
+    },
+    computed: {
+        todoLength: function(){
+            return this.todos,length
+        }
+    }
+})
+
+呼び出し
+{{todoLength}}
+
+computedオプションの各算出プロパティの値はキャッシュされる為、優位性を考えて使用すること

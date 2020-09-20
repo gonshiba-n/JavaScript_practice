@@ -13,8 +13,8 @@
       <h1>My Todo</h1>
       <!-- タブ Begin -->
       <div id="tab">
-        <div class="tab-list -active"><button>インボックス</button></div>
-        <div class="tab-list"><button>完了したタスク</button></div>
+        <div class="tab-list" :class="{'-active': filter === 'inbox'}"><button @click="setFilter('inbox')">インボックス</button></div>
+        <div class="tab-list" :class="{'-active': filter === 'completed'}"><button @click="setFilter('completed')">完了したタスク</button></div>
       </div>
       <!-- タブ End -->
       <!-- Todo入力フォーム Begin -->
@@ -36,8 +36,9 @@
       <!-- Todoリスト Begin -->
       <table id="todo-table">
         <tbody id="todo-main">
-          <tr v-for="todo in todos" :key="todo.id">
-            <td class="cell-done"><label><input type="checkbox" /></label></td>
+          <tr v-for="todo in filterTodos" :key="todo.id">
+            <!-- todo.doneがtrue(完了)ならクラス名に-activeを付与する -->
+            <td class="cell-done"><label :class="{'-active' : todo.done}"><input type="checkbox" /></label></td>
             <td class="cell-text">{{todo.text}}</td>
             <td class="cell-created-at">{{formatDate(todo.createdAt)}}</td>
           </tr>

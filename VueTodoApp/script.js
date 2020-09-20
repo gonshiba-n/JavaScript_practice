@@ -4,7 +4,7 @@ function createApp() {
         el: "#wrapper",
         data: {
             // フィルターの初期値はinbox(未完了),完了はcompleted
-            filter: "inbox"
+            filter: "inbox",
             // Vueインスタンスのデータとしてtodoリストを配列で登録
             todos:[
                 {
@@ -27,6 +27,15 @@ function createApp() {
                 }
             ]
         },
+        computed:{
+            // フィルター "inbox"か"completed"でフィルター
+            filterTodos: function () {
+                const filter = this.filter
+                return this.todos.filter(function (todo) {
+                    return filter === "completed" ? todo.done : !todo.done
+                })
+            }
+        },
         // 登録日のフォーマット
         methods: {
             formatDate: function (timestamp) {
@@ -39,12 +48,16 @@ function createApp() {
                 const day = date.getDate()
 
                 return year + "." + month + "." + day
+            },
+            // フィルター切り替えメソッド
+            setFilter: function(filter){
+                this.filter = filter
             }
         }
     })
 };
 
-/** 初期化 **/
+// 初期化
 function initialize() {
     createApp()
 };
